@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info">Enter Details</h4>
+        <form action="" method="POST"  class="text-center alert alert-info">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-success" value="Add">
+        </form>
+    </div>
+    
+<div class="col-sm-8">
+    <h4 class="text-center alert alert-info">Show farmer records</h4>
+    {% if recorddata %}
+    <table class="table table-hover">
+        <thead>
+            <tr>   
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Tractor brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Tractor implements</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in recorddata %}
+            <tr>
+                <th scope="row">{{i.name}}</th>
+                <td>{{i.email}}</td>
+                <td>{{i.phone}}</td>
+                <td>{{i.tractor_brand}}</td>
+                <td>{{i.model}}</td>
+                <td>{{i.tractor_implements}}</td>
+                <td>
+                    <a href="{% url 'update' i.id %}" class="btn btn-warning btn-sm">Edit</a>
+                </td>
+                <td>
+                    <form action="{% url 'delete' i.id %}" method = "post" class="d-inline">{% csrf_token %}
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                </td>
+            </tr> 
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+</div>
+
+
+{% endblock content %}
